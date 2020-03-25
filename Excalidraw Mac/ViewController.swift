@@ -7,21 +7,31 @@
 //
 
 import Cocoa
+import WebKit
 
 class ViewController: NSViewController {
-
+    @IBOutlet weak var progressBar: ProgressBar!
+    @IBOutlet weak var webView: WKWebView!
+    
+    var progressObservation: NSKeyValueObservation?
+    var loadingObservation: NSKeyValueObservation?
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
+        webView.load(URLRequest(url: URL(string: "https://excalidraw.com")!))
+        progressObservation = observe(\ViewController.webView.estimatedProgress) { (_, _) in
+            NSAnimationContext.runAnimationGroup { (context) in
+                context.allowsImplicitAnimation = true
+                self.progressBar.progress = CGFloat(self.webView.estimatedProgress)
+            }
+        }
+        loadingObservation = observe(\ViewController.webView.isLoading) { (_, _) in
+            NSAnimationContext.runAnimationGroup { (context) in
+                context.allowsImplicitAnimation = true
+                self.progressBar.alphaValue = self.webView.isLoading ? 1 : 0
+            }
         }
     }
-
 
 }
 

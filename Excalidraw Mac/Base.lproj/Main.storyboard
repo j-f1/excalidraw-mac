@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11134" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16092.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11134"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16092.1"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="16092.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -673,7 +675,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Excalidraw" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -683,7 +685,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Excalidraw" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -703,15 +705,48 @@
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Excalidraw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="499" height="328"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E7F-00-6Q3">
+                                <rect key="frame" x="0.0" y="0.0" width="499" height="328"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <customView horizontalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="l5R-qH-QUQ" customClass="ProgressBar" customModule="Excalidraw" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="326" width="499" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="kAo-Kc-bG3"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="progress">
+                                        <real key="value" value="0.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="l5R-qH-QUQ" firstAttribute="width" secondItem="m2S-Jp-Qdl" secondAttribute="width" id="7Pd-rj-zbY"/>
+                            <constraint firstAttribute="bottom" secondItem="E7F-00-6Q3" secondAttribute="bottom" id="CX7-rL-xlE"/>
+                            <constraint firstItem="E7F-00-6Q3" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Ey3-jP-8Vy"/>
+                            <constraint firstItem="l5R-qH-QUQ" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="cLh-DS-kLY"/>
+                            <constraint firstItem="l5R-qH-QUQ" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="fVN-qi-xLl"/>
+                            <constraint firstAttribute="trailing" secondItem="E7F-00-6Q3" secondAttribute="trailing" id="hsq-Wy-lRn"/>
+                            <constraint firstItem="E7F-00-6Q3" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="uT5-hi-Oxv"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="progressBar" destination="l5R-qH-QUQ" id="YDM-9V-MK4"/>
+                        <outlet property="webView" destination="E7F-00-6Q3" id="msh-ar-lwt"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="76" y="893"/>
         </scene>
     </scenes>
 </document>
